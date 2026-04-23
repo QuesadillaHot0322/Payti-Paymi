@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Payti & Paymi Repostería</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <style>
+    :root {
+      --cream: #FFF8EE;
+      --brown: #5C3317;
+      --gold:  #C9A448;
+      --dark:  #2e1a0e;
+      --light-brown: #A0522D;
+      --beige: #f5efe4;
+    }
+    * { margin:0; padding:0; box-sizing:border-box; scroll-behavior:smooth; }
+    body { font-family:'Poppins',sans-serif; background:var(--cream); color:var(--dark); }
+
+    /* ===== NAVBAR ===== */
+    nav {
+      position:fixed; top:0; width:100%; z-index:1000;
+      background:rgba(255,248,238,0.97); backdrop-filter:blur(12px);
+      box-shadow:0 2px 20px rgba(92,51,23,0.12);
+      padding:0 2rem; display:flex; align-items:center;
+      justify-content:space-between; height:70px;
+    }
+    .nav-logo { display:flex; align-items:center; gap:10px; text-decoration:none; }
+    .nav-logo img { height:50px; width:50px; border-radius:50%; object-fit:cover; box-shadow:0 2px 10px rgba(92,51,23,0.2); }
+    .nav-logo-text { font-family:'Playfair Display',serif; font-size:1.2rem; color:var(--brown); line-height:1.1; }
+    .nav-logo-text small { display:block; font-family:'Poppins',sans-serif; font-size:0.65rem; color:var(--gold); font-weight:600; letter-spacing:2px; text-transform:uppercase; }
+    .nav-links { display:flex; gap:1.8rem; list-style:none; align-items:center; }
+    .nav-links a { text-decoration:none; color:var(--brown); font-weight:500; font-size:0.88rem; transition:color 0.3s; position:relative; }
+    .nav-links a::after { content:''; position:absolute; bottom:-4px; left:0; width:0; height:2px; background:var(--gold); transition:width 0.3s; }
+    .nav-links a:hover::after { width:100%; }
+    .nav-links a:hover { color:var(--gold); }
+    .nav-toggle { display:none; font-size:1.5rem; cursor:pointer; color:var(--brown); background:none; border:none; }
+
+    /* ===== BTN ===== */
+    .btn {
+      padding:13px 28px; border-radius:50px; font-family:'Poppins',sans-serif;
+      font-weight:600; font-size:0.9rem; text-decoration:none;
+      transition:all 0.3s; cursor:pointer; border:none;
+      display:inline-flex; align-items:center; gap:8px;
+    }
+    .btn-primary  { background:var(--brown); color:white; }
+    .btn-primary:hover  { background:var(--dark); transform:translateY(-3px); box-shadow:0 10px 30px rgba(92,51,23,0.35); }
+    .btn-secondary { background:transparent; color:var(--brown); border:2px solid var(--brown); }
+    .btn-secondary:hover { background:var(--brown); color:white; transform:translateY(-3px); }
+
+    /* ===== SECTION BASE ===== */
+    section { padding:80px 2rem; }
+    .section-header { text-align:center; margin-bottom:3rem; }
+    .section-tag { display:inline-block; color:var(--gold); font-size:0.78rem; font-weight:600; letter-spacing:3px; text-transform:uppercase; margin-bottom:0.5rem; }
+    .section-title { font-family:'Playfair Display',serif; font-size:clamp(1.8rem,4vw,2.8rem); color:var(--brown); }
+    .section-title span { color:var(--gold); }
+    .section-line { width:60px; height:3px; background:var(--gold); margin:1rem auto; border-radius:2px; }
+    .section-desc { color:#7a5c3c; max-width:540px; margin:0 auto; font-size:0.92rem; line-height:1.7; }
+
+    /* ===== HERO ===== */
+    #hero { min-height:100vh; display:flex; flex-direction:column; padding-top:70px; }
+    .hero-banner { width:100%; max-height:420px; overflow:hidden; position:relative; }
+    .hero-banner img { width:100%; height:100%; object-fit:cover; object-position:center top; display:block; }
+    .hero-banner-overlay { position:absolute; inset:0; background:linear-gradient(to bottom,transparent 60%,rgba(255,248,238,1) 100%); }
+    .hero-content { flex:1; background:linear-gradient(180deg,var(--cream) 0%,#fde8d8 100%); display:flex; align-items:center; justify-content:center; text-align:center; padding:3rem 2rem 4rem; }
+    .hero-inner { max-width:750px; }
+    .hero-logo-img { width:140px; height:140px; border-radius:50%; object-fit:cover; box-shadow:0 10px 40px rgba(92,51,23,0.25); margin-bottom:1.5rem; border:4px solid white; animation:logoBounce 3s ease-in-out infinite; }
+    @keyframes logoBounce { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-8px)} }
+    .hero-badge { display:inline-block; background:var(--gold); color:white; padding:6px 20px; border-radius:50px; font-size:0.78rem; font-weight:600; letter-spacing:2px; text-transform:uppercase; margin-bottom:1rem; }
+    .hero-title { font-family:'Playfair Display',serif; font-size:clamp(2.5rem,7vw,5rem); color:var(--brown); line-height:1.1; margin-bottom:0.5rem; }
+    .hero-title span { color:var(--gold); }
+    .hero-slogan { font-size:clamp(1rem,3vw,1.4rem); color:var(--light-brown); font-style:italic; margin-bottom:0.7rem; font-family:'Playfair Display',serif; }
+    .hero-subtitle { font-size:0.95rem; color:#9a6a45; margin:0.5rem 0 2.5rem; line-height:1.7; }
+    .hero-buttons { display:flex; gap:1rem; justify-content:center; flex-wrap:wrap; }
+    .hero-stats { display:flex; justify-content:center; gap:3rem; margin-top:3rem; flex-wrap:wrap; }
+    .stat { text-align:center; }
+    .stat-number { font-family:'Playfair Display',serif; font-size:2rem; color:var(--brown); font-weight:700; }
+    .stat-label { font-size:0.75rem; color:var(--light-brown); text-transform:uppercase; letter-spacing:1px; }
+
+    /* ===== NOSOTROS ===== */
+    #nosotros { background:white; }
+    .about-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(230px,1fr)); gap:1.8rem; max-width:1100px; margin:0 auto; }
+    .about-card { background:var(--cream); border-radius:20px; padding:2rem; text-align:center; transition:transform 0.3s,box-shadow 0.3s; border:2px solid transparent; cursor:default; }
+    .about-card:hover { transform:translateY(-8px); box-shadow:0 15px 40px rgba(92,51,23,0.15); border-color:var(--gold); }
+    .about-icon { font-size:3rem; margin-bottom:1rem; }
+    .about-card h3 { font-family:'Playfair Display',serif; color:var(--brown); font-size:1.2rem; margin-bottom:0.5rem; }
+    .about-card p { color:#7a5c3c; font-size:0.88rem; line-height:1.6; }
+
+    /* ===== MENU (VASTELITOS) ===== */
+    #menu { background:var(--beige); }
+    .menu-filter { display:flex; justify-content:center; gap:0.8rem; margin-bottom:2.5rem; flex-wrap:wrap; }
+    .filter-btn { padding:8px 22px; border-radius:50px; border:2px solid var(--brown); background:transparent; color:var(--brown); font-family:'Poppins',sans-serif; font-weight:500; font-size:0.88rem; cursor:pointer; transition:all 0.3s; }
+    .filter-btn.active,.filter-btn:hover { background:var(--brown); color:white; }
+    .menu-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(265px,1fr)); gap:1.8rem; max-width:1200px; margin:0 auto; }
+    .menu-card { background:white; border-radius:20px; overflow:hidden; box-shadow:0 4px 18px rgba(92,51,23,0.1); transition:transform 0.3s,box-shadow 0.3s; cursor:pointer; }
+    .menu-card:hover { transform:translateY(-8px); box-shadow:0 16px 40px rgba(92,51,23,0.2); }
+
+    /* Card image — soporta foto real o emoji */
+    .menu-card-img {
+      height:210px; display:flex; align-items:center; justify-content:center;
+      font-size:5rem; position:relative; overflow:hidden;
+    }
+    .menu-card-img img {
+      width:100%; height:100%; object-fit:cover; object-position:center;
+      display:block; transition:transform 0.4s ease;
+    }
+    .menu-card:hover .menu-card-img img { transform:scale(1.07); }
+    .vastelito-bg { background:linear-gradient(135deg,#fde8d8,#f9d5e5); }
+    .cupcake-bg   { background:linear-gradient(135deg,#fef9d8,#fed5e0); }
+    .menu-card-badge { position:absolute; top:12px; right:12px; background:var(--gold); color:white; padding:3px 11px; border-radius:20px; font-size:0.72rem; font-weight:600; z-index:1; }
+    .menu-card-body { padding:1.2rem 1.4rem 1.5rem; }
+    .menu-card-name { font-family:'Playfair Display',serif; color:var(--brown); font-size:1.2rem; margin-bottom:0.4rem; }
+    .menu-card-desc { color:#7a5c3c; font-size:0.83rem; line-height:1.6; margin-bottom:1rem; }
+    .menu-card-footer { display:flex; justify-content:space-between; align-items:center; }
+    .menu-card-price { font-size:1rem; font-weight:600; color:var(--brown); }
+    .menu-card-cta { background:var(--brown); color:white; border:none; padding:7px 15px; border-radius:30px; font-size:0.78rem; cursor:pointer; font-family:'Poppins',sans-serif; transition:background 0.3s; }
+    .menu-card-cta:hover { background:var(--gold); }
+
+    /* ===== PASTELES SECTION ===== */
+    #pasteles { background:white; }
+    .pastel-tabs { display:flex; justify-content:center; gap:0.8rem; margin-bottom:2.5rem; flex-wrap:wrap; }
+    .pastel-tab { padding:9px 24px; border-radius:50px; border:2px solid var(--brown); background:transparent; color:var(--brown); font-family:'Poppins',sans-serif; font-weight:500; font-size:0.88rem; cursor:pointer; transition:all 0.3s; }
+    .pastel-tab.active,.pastel-tab:hover { background:var(--brown); color:white; }
+    .tab-panel { display:none; max-width:1100px; margin:0 auto; animation:fadeIn 0.4s ease; }
+    .tab-panel.active { display:block; }
+    @keyframes fadeIn { from{opacity:0;transform:translateY(10px)} to{opacity:1;transform:translateY(0)} }
+
+    /* Price note */
+    .price-note {
+      background:linear-gradient(135deg,#fff8e7,#fde8c8);
+      border:2px dashed var(--gold); border-radius:16px;
+      padding:1.2rem 1.8rem; text-align:center; margin-bottom:2.5rem;
+      display:flex; align-items:center; justify-content:center; gap:12px; flex-wrap:wrap;
+    }
+    .price-note span { font-size:1.5rem; }
+    .price-note p { color:var(--brown); font-weight:500; font-size:0.92rem; line-height:1.5; }
+    .price-note strong { color:var(--gold); }
+
+    /* Tamaños */
+    .sizes-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(170px,1fr)); gap:1.4rem; }
+    .size-card { background:var(--cream); border-radius:18px; padding:1.4rem 1rem; text-align:center; border:2px solid transparent; transition:transform 0.3s,box-shadow 0.3s,border-color 0.3s; cursor:default; }
+    .size-card:hover { transform:translateY(-6px); box-shadow:0 12px 30px rgba(92,51,23,0.15); border-color:var(--gold); }
+    .size-cake { font-size:2.8rem; margin-bottom:0.6rem; }
+    .size-name { font-family:'Playfair Display',serif; color:var(--brown); font-size:1rem; font-weight:700; margin-bottom:0.2rem; }
+    .size-inches { color:var(--gold); font-size:0.82rem; font-weight:600; margin-bottom:0.4rem; }
+    .size-rinde { color:#7a5c3c; font-size:0.8rem; }
+    .size-note { text-align:center; color:#9a6a45; font-size:0.82rem; margin-top:1.5rem; font-style:italic; }
+
+    /* Sabores */
+    .flavors-wrapper { display:grid; grid-template-columns:1fr 1fr; gap:2rem; }
+    .flavor-box { background:var(--cream); border-radius:20px; padding:1.8rem; }
+    .flavor-box-title { font-family:'Playfair Display',serif; color:var(--brown); font-size:1.4rem; margin-bottom:1.2rem; display:flex; align-items:center; gap:10px; }
+    .flavor-list { display:flex; flex-wrap:wrap; gap:0.6rem; }
+    .flavor-chip { background:white; border:2px solid var(--gold); color:var(--brown); padding:6px 16px; border-radius:30px; font-size:0.85rem; font-weight:500; transition:all 0.2s; cursor:default; }
+    .flavor-chip:hover { background:var(--gold); color:white; transform:scale(1.05); }
+
+    /* ===== GALERÍA PASTELES ===== */
+    .gallery-note {
+      background:linear-gradient(135deg,#fff8e7,#fde8c8);
+      border:2px dashed var(--gold); border-radius:16px;
+      padding:1rem 1.5rem; max-width:700px; margin:0 auto 2.5rem;
+      display:flex; align-items:center; justify-content:center; gap:10px; flex-wrap:wrap;
+    }
+    .gallery-note p { color:var(--brown); font-size:0.9rem; font-weight:500; line-height:1.5; }
+    .gallery-note strong { color:var(--gold); }
+    .pasteles-gallery {
+      display:grid; grid-template-columns:repeat(auto-fill,minmax(300px,1fr));
+      gap:1.8rem; max-width:1100px; margin:0 auto;
+    }
+    .gallery-card { border-radius:20px; overflow:hidden; box-shadow:0 6px 25px rgba(92,51,23,0.15); position:relative; cursor:pointer; aspect-ratio:4/3; }
+    .gallery-card img { width:100%; height:100%; object-fit:cover; object-position:center top; transition:transform 0.5s ease; display:block; }
+    .gallery-card:hover img { transform:scale(1.06); }
+    .gallery-card-label {
+      position:absolute; bottom:0; left:0; right:0;
+      background:linear-gradient(to top,rgba(46,26,14,0.85) 0%,transparent 100%);
+      color:white; padding:1.2rem 1rem 0.8rem;
+      font-family:'Playfair Display',serif; font-size:1rem;
+      display:flex; align-items:flex-end; justify-content:space-between;
+    }
+    .gallery-card-label span { font-size:0.75rem; font-family:'Poppins',sans-serif; opacity:0.85; }
+    .gallery-more { text-align:center; margin-top:2rem; }
+    .gallery-more p { color:#9a6a45; font-size:0.88rem; margin-bottom:1rem; font-style:italic; }
+
+    /* Info pedido */
+    .order-info-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:1.5rem; margin-bottom:2rem; }
+    .order-info-card { background:var(--cream); border-radius:16px; padding:1.5rem; text-align:center; }
+    .order-info-card .oi-icon { font-size:2.2rem; margin-bottom:0.6rem; }
+    .order-info-card h4 { font-family:'Playfair Display',serif; color:var(--brown); font-size:1rem; margin-bottom:0.4rem; }
+    .order-info-card p { color:#7a5c3c; font-size:0.82rem; line-height:1.5; }
+    .order-cta-box { text-align:center; }
+    .order-note { font-size:0.82rem; color:#9a6a45; margin-top:1rem; font-style:italic; }
+
+    /* ===== MODAL ===== */
+    .modal-overlay { display:none; position:fixed; inset:0; z-index:9999; background:rgba(0,0,0,0.65); backdrop-filter:blur(5px); align-items:center; justify-content:center; padding:1rem; }
+    .modal-overlay.active { display:flex; }
+    .modal { background:white; border-radius:24px; max-width:460px; width:100%; padding:2rem; position:relative; animation:modalIn 0.3s ease; }
+    @keyframes modalIn { from{transform:scale(0.8);opacity:0} to{transform:scale(1);opacity:1} }
+    .modal-close { position:absolute; top:1rem; right:1rem; background:var(--cream); border:none; width:32px; height:32px; border-radius:50%; cursor:pointer; font-size:1rem; color:var(--brown); display:flex; align-items:center; justify-content:center; }
+    .modal-img { width:100%; height:200px; object-fit:cover; border-radius:16px; margin-bottom:1rem; display:none; }
+    .modal-emoji { font-size:4rem; text-align:center; margin-bottom:0.8rem; }
+    .modal-title { font-family:'Playfair Display',serif; color:var(--brown); font-size:1.7rem; text-align:center; }
+    .modal-desc { color:#7a5c3c; text-align:center; margin:0.8rem 0 1rem; line-height:1.7; font-size:0.92rem; }
+    .modal-price { text-align:center; font-size:1.4rem; font-weight:700; color:var(--gold); margin-bottom:1.5rem; }
+    .modal-order { display:flex; align-items:center; justify-content:center; gap:8px; width:100%; background:#25D366; color:white; padding:14px; border-radius:50px; text-decoration:none; font-weight:600; font-size:0.95rem; transition:background 0.3s; }
+    .modal-order:hover { background:#1da851; }
+
+    /* ===== CONTACTO ===== */
+    #contacto { background:var(--beige); }
+    .contact-wrapper { max-width:1050px; margin:0 auto; display:grid; grid-template-columns:1fr 1fr; gap:3rem; }
+    .contact-info h3 { font-family:'Playfair Display',serif; color:var(--brown); font-size:1.6rem; margin-bottom:1.5rem; }
+    .contact-item { display:flex; align-items:center; gap:1rem; margin-bottom:1rem; padding:0.9rem 1rem; background:white; border-radius:12px; text-decoration:none; color:var(--dark); transition:transform 0.2s,box-shadow 0.2s; }
+    .contact-item:hover { transform:translateX(5px); box-shadow:0 5px 15px rgba(92,51,23,0.1); }
+    .contact-icon { width:44px; height:44px; border-radius:11px; display:flex; align-items:center; justify-content:center; font-size:1.1rem; flex-shrink:0; }
+    .ci-wa    { background:#25D366; color:white; }
+    .ci-ig    { background:linear-gradient(45deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888); color:white; }
+    .ci-fb    { background:#1877F2; color:white; }
+    .ci-map   { background:var(--gold); color:white; }
+    .ci-phone { background:var(--brown); color:white; }
+    .contact-text strong { display:block; font-weight:600; color:var(--brown); font-size:0.92rem; }
+    .contact-text span   { font-size:0.82rem; color:#7a5c3c; }
+    .contact-form h3 { font-family:'Playfair Display',serif; color:var(--brown); font-size:1.6rem; margin-bottom:1.5rem; }
+    .form-group { margin-bottom:1.1rem; }
+    .form-group label { display:block; font-size:0.82rem; font-weight:600; color:var(--brown); margin-bottom:0.4rem; }
+    .form-group input,.form-group textarea,.form-group select { width:100%; padding:11px 15px; border:2px solid #e8d8c8; border-radius:12px; font-family:'Poppins',sans-serif; font-size:0.88rem; background:white; color:var(--dark); transition:border-color 0.3s; outline:none; }
+    .form-group input:focus,.form-group textarea:focus,.form-group select:focus { border-color:var(--gold); }
+    .form-group textarea { resize:vertical; min-height:100px; }
+    .btn-form { width:100%; padding:13px; background:var(--brown); color:white; border:none; border-radius:50px; font-family:'Poppins',sans-serif; font-weight:600; font-size:0.95rem; cursor:pointer; transition:all 0.3s; display:flex; align-items:center; justify-content:center; gap:8px; }
+    .btn-form:hover { background:var(--gold); transform:translateY(-2px); box-shadow:0 8px 25px rgba(92,51,23,0.3); }
+    .form-success { display:none; text-align:center; padding:2rem; background:#f0fff4; border-radius:16px; color:#2d6a4f; }
+
+    /* ===== FOOTER ===== */
+    footer { background:var(--dark); color:#c8a87a; text-align:center; padding:3rem 2rem; }
+    .footer-logo-img { width:90px; height:90px; border-radius:50%; object-fit:cover; margin-bottom:1rem; border:3px solid var(--gold); }
+    footer .footer-name { font-family:'Playfair Display',serif; font-size:1.6rem; color:var(--gold); margin-bottom:0.4rem; }
+    footer p { font-size:0.85rem; opacity:0.65; margin-bottom:1.2rem; }
+    .social-links { display:flex; justify-content:center; gap:1rem; margin-bottom:1.5rem; }
+    .social-link { width:40px; height:40px; border-radius:50%; display:flex; align-items:center; justify-content:center; text-decoration:none; font-size:1.1rem; transition:transform 0.3s,opacity 0.3s; }
+    .social-link:hover { transform:scale(1.2); opacity:0.85; }
+    .sl-wa { background:#25D366; color:white; }
+    .sl-ig { background:linear-gradient(45deg,#f09433,#dc2743,#bc1888); color:white; }
+    .sl-fb { background:#1877F2; color:white; }
+    footer .copy { font-size:0.72rem; opacity:0.4; }
+
+    /* ===== WA FLOAT ===== */
+    .wa-float { position:fixed; bottom:25px; right:25px; z-index:999; background:#25D366; color:white; width:58px; height:58px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:1.6rem; text-decoration:none; box-shadow:0 5px 20px rgba(37,211,102,0.5); animation:pulse 2s infinite; }
+    @keyframes pulse { 0%,100%{box-shadow:0 5px 20px rgba(37,211,102,0.45)} 50%{box-shadow:0 5px 35px rgba(37,211,102,0.8)} }
+
+    /* ===== RESPONSIVE ===== */
+    @media(max-width:768px) {
+      .nav-links { display:none; flex-direction:column; position:absolute; top:70px; left:0; right:0; background:rgba(255,248,238,0.98); padding:1rem 2rem 2rem; gap:1rem; box-shadow:0 10px 30px rgba(92,51,23,0.1); }
+      .nav-links.open { display:flex; }
+      .nav-toggle { display:block; }
+      .contact-wrapper { grid-template-columns:1fr; }
+      .hero-banner { max-height:220px; }
+      .flavors-wrapper { grid-template-columns:1fr; }
+      .hero-stats { gap:1.5rem; }
+      .pasteles-gallery { grid-template-columns:1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav>
+  <a href="#hero" class="nav-logo">
+    <img src="logo.png" alt="Payti & Paymi Logo"/>
+    <div class="nav-logo-text">Payti & Paymi<small>Repostería</small></div>
+  </a>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#nosotros">Nosotros</a></li>
+    <li><a href="#menu">Vastelitos</a></li>
+    <li><a href="#pasteles">Pasteles</a></li>
+    <li><a href="#contacto">Contacto</a></li>
+    <li>
+      <a href="https://wa.me/526863955860?text=Hola!%20Quiero%20hacer%20un%20pedido%20%F0%9F%8E%82"
+         target="_blank" class="btn btn-primary" style="padding:9px 20px;font-size:0.82rem;">
+        <i class="fab fa-whatsapp"></i> Ordenar
+      </a>
+    </li>
+  </ul>
+  <button class="nav-toggle" onclick="toggleNav()"><i class="fas fa-bars"></i></button>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-banner">
+    <img src="banner.png" alt="Endulzando Momentos Especiales"/>
+    <div class="hero-banner-overlay"></div>
+  </div>
+  <div class="hero-content">
+    <div class="hero-inner">
+      <img src="logo.png" alt="Logo Payti & Paymi" class="hero-logo-img"/>
+      <div class="hero-badge">✨ Repostería Artesanal · Mexicali, BC</div>
+      <h1 class="hero-title">Payti <span>&</span> Paymi</h1>
+      <p class="hero-slogan">✨ Endulzando Momentos Especiales ✨</p>
+      <p class="hero-subtitle">Repostería hecha a mano, 100% con amor 💕<br>Pasteles Personalizados · Cupcakes · Vastelitos · Bouqcakes</p>
+      <div class="hero-buttons">
+        <a href="#menu" class="btn btn-primary"><i class="fas fa-birthday-cake"></i> Ver Menú</a>
+        <a href="https://wa.me/526863955860?text=Hola!%20Vi%20su%20p%C3%A1gina%20y%20me%20interesa%20hacer%20un%20pedido%20%F0%9F%8E%82"
+           target="_blank" class="btn btn-secondary"><i class="fab fa-whatsapp"></i> Pedir por WhatsApp</a>
+      </div>
+      <div class="hero-stats">
+        <div class="stat"><div class="stat-number">100%</div><div class="stat-label">Hecho a mano</div></div>
+        <div class="stat"><div class="stat-number">💕</div><div class="stat-label">Con amor</div></div>
+        <div class="stat"><div class="stat-number">4+</div><div class="stat-label">Especialidades</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- NOSOTROS -->
+<section id="nosotros">
+  <div class="section-header">
+    <div class="section-tag">Sobre nosotras</div>
+    <h2 class="section-title">¿Quiénes <span>somos?</span></h2>
+    <div class="section-line"></div>
+    <p class="section-desc">Somos Payti & Paymi, dos apasionadas de la repostería ubicadas en Mexicali, BC. Cada producto es elaborado con ingredientes de calidad y mucho amor 💕</p>
+  </div>
+  <div class="about-grid">
+    <div class="about-card"><div class="about-icon">🎂</div><h3>Pasteles Personalizados</h3><p>Diseñamos el pastel de tus sueños para cada ocasión. Sabores, tamaños y decoraciones a tu medida.</p></div>
+    <div class="about-card"><div class="about-icon">🧁</div><h3>Cupcakes</h3><p>Deliciosos cupcakes en gran variedad de sabores y decoraciones. Perfectos para cualquier celebración.</p></div>
+    <div class="about-card"><div class="about-icon">🍰</div><h3>Vastelitos</h3><p>Nuestro producto estrella: pastel individual en vaso bañado en 3 leches deslactosada. ¡Irresistibles!</p></div>
+    <div class="about-card"><div class="about-icon">💐</div><h3>Bouqcakes</h3><p>La combinación perfecta entre flores y cupcakes. Un regalo original y delicioso para alguien especial.</p></div>
+  </div>
+</section>
+
+<!-- VASTELITOS -->
+<section id="menu">
+  <div class="section-header">
+    <div class="section-tag">Nuestro producto estrella</div>
+    <h2 class="section-title">Menú de <span>Vastelitos</span></h2>
+    <div class="section-line"></div>
+    <p class="section-desc">Pastel individual en vaso bañado en 3 leches deslactosada 🍰 Haz clic para ordenar fácilmente por WhatsApp.</p>
+  </div>
+  <div class="menu-filter">
+    <button class="filter-btn active" onclick="filterMenu('todos',this)">Todos</button>
+    <button class="filter-btn" onclick="filterMenu('vastelito',this)">🍰 Vastelitos</button>
+    <button class="filter-btn" onclick="filterMenu('cupcake',this)">🧁 Cupcakes & Bouqcakes</button>
+  </div>
+  <div class="menu-grid" id="menuGrid"></div>
+</section>
+
+<!-- PASTELES PERSONALIZADOS -->
+<section id="pasteles">
+  <div class="section-header">
+    <div class="section-tag">Personalizados</div>
+    <h2 class="section-title">Pasteles <span>a tu medida</span></h2>
+    <div class="section-line"></div>
+    <p class="section-desc">Creamos el pastel perfecto para tu ocasión especial. Elige tu tamaño, sabor y decoración.</p>
+  </div>
+
+  <div class="price-note" style="max-width:800px;margin:0 auto 2.5rem;">
+    <span>😊</span>
+    <p>Los precios <strong>varían dependiendo de la decoración</strong> del pastel.<br>
+    Escríbenos con tu idea y te cotizamos sin compromiso 💕</p>
+  </div>
+
+  <div class="pastel-tabs">
+    <button class="pastel-tab active" onclick="showTab('tab-sizes',this)">📐 Tamaños</button>
+    <button class="pastel-tab" onclick="showTab('tab-flavors',this)">🍓 Sabores</button>
+    <button class="pastel-tab" onclick="showTab('tab-gallery',this)">📸 Ejemplos</button>
+    <button class="pastel-tab" onclick="showTab('tab-order',this)">📋 ¿Cómo pedir?</button>
+  </div>
+
+  <!-- TAB: Tamaños -->
+  <div class="tab-panel active" id="tab-sizes">
+    <div class="sizes-grid" id="sizesGrid"></div>
+    <p class="size-note">* Las medidas en pulgadas indican el diámetro de cada pastel.</p>
+  </div>
+
+  <!-- TAB: Sabores -->
+  <div class="tab-panel" id="tab-flavors">
+    <div class="flavors-wrapper">
+      <div class="flavor-box">
+        <div class="flavor-box-title">🍞 Sabor de Pan</div>
+        <div class="flavor-list" id="breadFlavors"></div>
+      </div>
+      <div class="flavor-box">
+        <div class="flavor-box-title">🍮 Sabor de Relleno</div>
+        <div class="flavor-list" id="fillingFlavors"></div>
+      </div>
+    </div>
+    <div class="price-note" style="margin-top:2rem;">
+      <span>⏰</span>
+      <p>Lo ideal es agendar <strong>con una semana de anticipación</strong>, pero a veces con <strong>2-3 días es suficiente</strong> (sujeto a disponibilidad).</p>
+    </div>
+  </div>
+
+  <!-- TAB: Galería -->
+  <div class="tab-panel" id="tab-gallery">
+    <div class="gallery-note">
+      <span>✨</span>
+      <p>Algunos de nuestros pasteles realizados. <strong>¡Cada diseño es único y personalizado!</strong> El tuyo puede ser el siguiente 🎂</p>
+    </div>
+    <div class="pasteles-gallery">
+      <div class="gallery-card">
+        <img src="pastel-espacio.jpg" alt="Pastel temático espacio" loading="lazy"/>
+        <div class="gallery-card-label">🚀 Temático Espacio <span>Personalizado</span></div>
+      </div>
+      <div class="gallery-card">
+        <img src="pastel-snoopy.jpg" alt="Pastel Snoopy" loading="lazy"/>
+        <div class="gallery-card-label">🐶 Temático Snoopy <span>Personalizado</span></div>
+      </div>
+      <div class="gallery-card">
+        <img src="pastel-corazon.jpg" alt="Pastel corazón vintage" loading="lazy"/>
+        <div class="gallery-card-label">❤️ Corazón Vintage <span>Personalizado</span></div>
+      </div>
+    </div>
+    <div class="gallery-more">
+      <p>¿Tienes un tema en mente? ¡Cuéntanos y lo hacemos realidad! 💕</p>
+      <a href="https://wa.me/526863955860?text=Hola!%20Vi%20sus%20pasteles%20y%20me%20interesa%20cotizar%20uno%20personalizado%20%F0%9F%8E%82"
+         target="_blank" class="btn btn-primary">
+        <i class="fab fa-whatsapp"></i> Quiero un pastel así
+      </a>
+    </div>
+  </div>
+
+  <!-- TAB: Cómo pedir -->
+  <div class="tab-panel" id="tab-order">
+    <div class="order-info-grid">
+      <div class="order-info-card"><div class="oi-icon">👥</div><h4>1. ¿Para cuántas personas?</h4><p>Dinos el número de invitados para recomendarte el tamaño ideal.</p></div>
+      <div class="order-info-card"><div class="oi-icon">🖼️</div><h4>2. ¿Tienes imagen de referencia?</h4><p>Compártenos la imagen o tema de tu pastel. ¡Nos encanta crear diseños únicos!</p></div>
+      <div class="order-info-card"><div class="oi-icon">🍓</div><h4>3. ¿Sabor de pan y relleno?</h4><p>Elige entre nuestras deliciosas opciones de pan y relleno disponibles.</p></div>
+      <div class="order-info-card"><div class="oi-icon">📅</div><h4>4. ¿Fecha de tu evento?</h4><p>Indícanos la fecha para asegurar la disponibilidad de tu pedido.</p></div>
+    </div>
+    <div class="order-cta-box">
+      <a href="https://wa.me/526863955860?text=Hola!%20Me%20interesa%20cotizar%20un%20pastel%20personalizado%20%F0%9F%8E%82%0A%0A1.%20Personas%3A%0A2.%20Tema%2FReferencia%3A%0A3.%20Sabor%20de%20pan%3A%0A4.%20Relleno%3A%0A5.%20Fecha%20del%20evento%3A"
+         target="_blank" class="btn btn-primary" style="font-size:1rem;padding:15px 35px;">
+        <i class="fab fa-whatsapp"></i> ¡Cotizar mi pastel ahora!
+      </a>
+      <p class="order-note">Lo ideal es agendar con una semana de anticipación, pero a veces con 2-3 días es suficiente ☺️</p>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACTO -->
+<section id="contacto">
+  <div class="section-header">
+    <div class="section-tag">Hablemos</div>
+    <h2 class="section-title">Con<span>táctanos</span></h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="contact-wrapper">
+    <div class="contact-info">
+      <h3>¿Dónde encontrarnos?</h3>
+      <a href="https://wa.me/526863955860?text=Hola!%20Me%20interesa%20hacer%20un%20pedido" target="_blank" class="contact-item">
+        <div class="contact-icon ci-wa"><i class="fab fa-whatsapp"></i></div>
+        <div class="contact-text"><strong>WhatsApp</strong><span>+52 (686) 395 5860 — ¡Escríbenos!</span></div>
+      </a>
+      <a href="tel:6863955860" class="contact-item">
+        <div class="contact-icon ci-phone"><i class="fas fa-phone"></i></div>
+        <div class="contact-text"><strong>Teléfono</strong><span>686 395 5860</span></div>
+      </a>
+      <a href="https://instagram.com/paytiypaymi" target="_blank" class="contact-item">
+        <div class="contact-icon ci-ig"><i class="fab fa-instagram"></i></div>
+        <div class="contact-text"><strong>Instagram</strong><span>@paytiypaymi</span></div>
+      </a>
+      <a href="https://www.facebook.com/profile.php?id=100083142115933" target="_blank" class="contact-item">
+        <div class="contact-icon ci-fb"><i class="fab fa-facebook-f"></i></div>
+        <div class="contact-text"><strong>Facebook</strong><span>Payti & Paymi</span></div>
+      </a>
+      <div class="contact-item">
+        <div class="contact-icon ci-map"><i class="fas fa-map-marker-alt"></i></div>
+        <div class="contact-text"><strong>Ubicación</strong><span>Mexicali, Baja California 🌵</span></div>
+      </div>
+    </div>
+    <div class="contact-form">
+      <h3>Envíanos tu pedido</h3>
+      <form id="contactForm" onsubmit="submitForm(event)">
+        <div class="form-group"><label>Tu nombre</label><input type="text" placeholder="¿Cómo te llamas?" required/></div>
+        <div class="form-group"><label>Teléfono / WhatsApp</label><input type="tel" placeholder="686 XXX XXXX" required/></div>
+        <div class="form-group">
+          <label>¿Qué deseas ordenar?</label>
+          <select required>
+            <option value="">-- Selecciona una opción --</option>
+            <option>🍰 Vastelito — Cajeta</option>
+            <option>🍰 Vastelito — Oreo</option>
+            <option>🍰 Vastelito — Nutella</option>
+            <option>🍰 Vastelito — Red Velvet</option>
+            <option>🍰 Vastelito — Frutos Rojos</option>
+            <option>🍰 Vastelito — Zanahoria</option>
+            <option>🍰 Vastelito — Fresas</option>
+            <option>🎂 Pastel Personalizado</option>
+            <option>🧁 Cupcakes</option>
+            <option>💐 Bouqcake</option>
+            <option>Otro / Consulta general</option>
+          </select>
+        </div>
+        <div class="form-group"><label>Detalles del pedido</label><textarea placeholder="Fecha especial, cantidad, sabores, dedicatoria, tema... 🎉"></textarea></div>
+        <button type="submit" class="btn-form"><i class="fab fa-whatsapp"></i> Enviar pedido por WhatsApp</button>
+      </form>
+      <div class="form-success" id="formSuccess">
+        <div style="font-size:3rem">🎉</div>
+        <h3 style="color:var(--brown);font-family:'Playfair Display',serif;margin-bottom:0.5rem">¡Gracias!</h3>
+        <p style="color:#2d6a4f">Te redirigimos a WhatsApp para confirmar tu pedido.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <img src="logo.png" alt="Logo" class="footer-logo-img"/>
+  <div class="footer-name">Payti & Paymi</div>
+  <p>Repostería hecha a mano, 100% con amor 💕 · Mexicali, Baja California</p>
+  <div class="social-links">
+    <a href="https://wa.me/526863955860" target="_blank" class="social-link sl-wa"><i class="fab fa-whatsapp"></i></a>
+    <a href="https://instagram.com/paytiypaymi" target="_blank" class="social-link sl-ig"><i class="fab fa-instagram"></i></a>
+    <a href="https://www.facebook.com/profile.php?id=100083142115933" target="_blank" class="social-link sl-fb"><i class="fab fa-facebook-f"></i></a>
+  </div>
+  <p class="copy">© 2026 Payti & Paymi Repostería · Todos los derechos reservados.</p>
+</footer>
+
+<!-- WA FLOTANTE -->
+<a href="https://wa.me/526863955860?text=Hola!%20Vi%20su%20p%C3%A1gina%20y%20me%20interesa%20hacer%20un%20pedido%20%F0%9F%8E%82"
+   target="_blank" class="wa-float" title="¡Escríbenos!">
+  <i class="fab fa-whatsapp"></i>
+</a>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modalOverlay" onclick="closeModalOutside(event)">
+  <div class="modal" id="modalBox">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <img class="modal-img" id="mImg" alt=""/>
+    <div class="modal-emoji" id="mEmoji"></div>
+    <h2 class="modal-title" id="mTitle"></h2>
+    <p class="modal-desc" id="mDesc"></p>
+    <div class="modal-price" id="mPrice"></div>
+    <a class="modal-order" id="mOrder" target="_blank"><i class="fab fa-whatsapp"></i> Ordenar por WhatsApp</a>
+  </div>
+</div>
+
+<script>
+/* ====== DATA ====== */
+const products = [
+  { id:1,  cat:'vastelito', img:'vastelito-frutos-rojos.jpg', emoji:'🫐', name:'Vastelito Frutos Rojos', badge:'',            bg:'vastelito-bg', desc:'Pan de vainilla + frutos rojos caseros y queso crema bañado en 3 leches deslactosada.',            price:'Consultar precio' },
+  { id:2,  cat:'vastelito', img:'vastelito-redvelvet.jpg',    emoji:'❤️', name:'Vastelito Red Velvet',   badge:'💅 Elegante', bg:'vastelito-bg', desc:'Pan Red Velvet + queso crema y chocolate rojo bañado en 3 leches deslactosada.',                  price:'Consultar precio' },
+  { id:3,  cat:'vastelito', img:'vastelito-oreo.jpg',         emoji:'🍫', name:'Vastelito Oreo',         badge:'🍫 Favorito', bg:'vastelito-bg', desc:'Pan de chocolate + oreo y queso crema bañado en 3 leches deslactosada.',                          price:'Consultar precio' },
+  { id:4,  cat:'vastelito', img:'vastelito-fresa.jpg',        emoji:'🍓', name:'Vastelito Fresas',       badge:'🌸 Nuevo',    bg:'vastelito-bg', desc:'Pan de vainilla + fresas frescas y queso crema bañado en 3 leches deslactosada.',                 price:'Consultar precio' },
+  { id:5,  cat:'vastelito', img:'vastelito-zanahoria.jpg',    emoji:'🥕', name:'Vastelito Zanahoria',    badge:'',            bg:'vastelito-bg', desc:'Pan de zanahoria + queso crema y plátano o cajeta, bañado ligero en 3 leches deslactosada.',      price:'Consultar precio' },
+  { id:6,  cat:'vastelito', img:'',                           emoji:'🍮', name:'Vastelito Cajeta',       badge:'⭐ Popular',  bg:'vastelito-bg', desc:'Pan de vainilla + cajeta y queso crema bañado en 3 leches deslactosada.',                         price:'Consultar precio' },
+  { id:7,  cat:'vastelito', img:'',                           emoji:'🌰', name:'Vastelito Nutella',      badge:'',            bg:'vastelito-bg', desc:'Pan de chocolate + nutella y queso crema bañado en 3 leches deslactosada.',                        price:'Consultar precio' },
+  { id:8,  cat:'cupcake',   img:'',                           emoji:'🧁', name:'Cupcakes',               badge:'🎉 Pack',     bg:'cupcake-bg',   desc:'Cupcakes decorados artesanalmente en distintos sabores. Perfectos para fiestas, regalos o antojos.', price:'Precio a cotizar' },
+  { id:9,  cat:'cupcake',   img:'',                           emoji:'💐', name:'Bouqcake',               badge:'💝 Regalo',   bg:'cupcake-bg',   desc:'Un bouquet de cupcakes decorados como flores. ¡El regalo más original y delicioso!',               price:'Precio a cotizar' },
+];
+
+const sizes = [
+  { emoji:'🎂', name:'Mini Cake',    inches:'4"',  rinde:'1 – 2 rebanadas' },
+  { emoji:'🎂', name:'Pequeño Cake', inches:'4"',  rinde:'2 – 4 rebanadas' },
+  { emoji:'🎂', name:'Chico Bajo',   inches:'6"',  rinde:'6 – 8 rebanadas' },
+  { emoji:'🎂', name:'Chico Alto',   inches:'6"',  rinde:'10 – 12 rebanadas' },
+  { emoji:'🎂', name:'Chico Plus',   inches:'6"',  rinde:'12 – 15 rebanadas' },
+  { emoji:'🎂', name:'Mediano Bajo', inches:'8"',  rinde:'12 – 16 rebanadas' },
+  { emoji:'🎂', name:'Mediano Alto', inches:'8"',  rinde:'20 – 24 rebanadas' },
+  { emoji:'🎂', name:'Mediano Plus', inches:'8"',  rinde:'30 – 32 rebanadas' },
+  { emoji:'🎂', name:'Grande Bajo',  inches:'10"', rinde:'25 – 30 rebanadas' },
+  { emoji:'🎂', name:'Grande Alto',  inches:'10"', rinde:'40 – 45 rebanadas' },
+  { emoji:'🎂', name:'Grande Plus',  inches:'10"', rinde:'55 – 60 rebanadas' },
+];
+
+const breadFlavors   = ['Vainilla','Fresa','Chocolate','Limón','Red Velvet','Funfeti','Piña','Zanahoria'];
+const fillingFlavors = ['Plátano','Nutella','Queso Crema','Oreo','Cajeta','Ganache de Chocolate','Frutos Rojos'];
+
+/* ====== RENDER MENU ====== */
+function renderMenu(filter='todos'){
+  const grid = document.getElementById('menuGrid');
+  grid.innerHTML = '';
+  (filter==='todos' ? products : products.filter(p=>p.cat===filter)).forEach(p=>{
+    const imgContent = p.img
+      ? `<img src="${p.img}" alt="${p.name}" loading="lazy"/>`
+      : `<span>${p.emoji}</span>`;
+    grid.innerHTML += `
+      <div class="menu-card" onclick="openModal(${p.id})">
+        <div class="menu-card-img ${p.img ? '' : p.bg}">
+          ${imgContent}
+          ${p.badge ? `<span class="menu-card-badge">${p.badge}</span>` : ''}
+        </div>
+        <div class="menu-card-body">
+          <h3 class="menu-card-name">${p.name}</h3>
+          <p class="menu-card-desc">${p.desc}</p>
+          <div class="menu-card-footer">
+            <span class="menu-card-price">${p.price}</span>
+            <button class="menu-card-cta">Ver más →</button>
+          </div>
+        </div>
+      </div>`;
+  });
+}
+
+function filterMenu(cat,btn){
+  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  renderMenu(cat);
+}
+
+/* ====== RENDER SIZES ====== */
+function renderSizes(){
+  document.getElementById('sizesGrid').innerHTML = sizes.map(s=>`
+    <div class="size-card">
+      <div class="size-cake">${s.emoji}</div>
+      <div class="size-name">${s.name}</div>
+      <div class="size-inches">${s.inches}</div>
+      <div class="size-rinde">🍽️ ${s.rinde}</div>
+    </div>`).join('');
+}
+
+/* ====== RENDER FLAVORS ====== */
+function renderFlavors(){
+  document.getElementById('breadFlavors').innerHTML   = breadFlavors.map(f=>`<span class="flavor-chip">✨ ${f}</span>`).join('');
+  document.getElementById('fillingFlavors').innerHTML = fillingFlavors.map(f=>`<span class="flavor-chip">✨ ${f}</span>`).join('');
+}
+
+/* ====== TABS ====== */
+function showTab(id,btn){
+  document.querySelectorAll('.pastel-tab').forEach(b=>b.classList.remove('active'));
+  document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById(id).classList.add('active');
+}
+
+/* ====== MODAL ====== */
+function openModal(id){
+  const p = products.find(x=>x.id===id);
+  const imgEl   = document.getElementById('mImg');
+  const emojiEl = document.getElementById('mEmoji');
+  if(p.img){
+    imgEl.src = p.img; imgEl.alt = p.name;
+    imgEl.style.display = 'block';
+    emojiEl.style.display = 'none';
+  } else {
+    imgEl.style.display = 'none';
+    emojiEl.style.display = 'block';
+    emojiEl.textContent = p.emoji;
+  }
+  document.getElementById('mTitle').textContent = p.name;
+  document.getElementById('mDesc').textContent  = p.desc;
+  document.getElementById('mPrice').textContent = p.price;
+  document.getElementById('mOrder').href = `https://wa.me/526863955860?text=Hola!%20Me%20interesa%20ordenar:%20${encodeURIComponent(p.name)}%20%F0%9F%8E%82`;
+  document.getElementById('modalOverlay').classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+function closeModal(){
+  document.getElementById('modalOverlay').classList.remove('active');
+  document.body.style.overflow = '';
+}
+function closeModalOutside(e){
+  if(e.target === document.getElementById('modalOverlay')) closeModal();
+}
+
+/* ====== FORM ====== */
+function submitForm(e){
+  e.preventDefault();
+  const f = e.target;
+  const msg = `Hola Payti & Paymi! 🎂\n\nNombre: ${f[0].value}\nTeléfono: ${f[1].value}\nProducto: ${f[2].value}\nDetalles: ${f[3].value || 'Sin detalles adicionales'}`;
+  f.style.display = 'none';
+  document.getElementById('formSuccess').style.display = 'block';
+  setTimeout(() => {
+    window.open(`https://wa.me/526863955860?text=${encodeURIComponent(msg)}`, '_blank');
+  }, 900);
+}
+
+/* ====== NAV MOBILE ====== */
+function toggleNav(){
+  document.getElementById('navLinks').classList.toggle('open');
+}
+
+/* ====== INIT ====== */
+renderMenu();
+renderSizes();
+renderFlavors();
+</script>
+</body>
+</html>
